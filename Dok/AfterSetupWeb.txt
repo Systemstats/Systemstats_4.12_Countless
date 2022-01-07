@@ -1,0 +1,44 @@
+Grattis! Du har nu nästan installerat Systemstats Web Server.
+
+Följande återstår att konfigurera efter installationen av Systemstats Web Server:
+
+FÖRST AV ALLT: 
+Se till att IIS är installerat och att PHP (minimum PHP version 5.6.30) är installerad. 
+Använd Microsoft Web Platform installer för att installera PHP. 
+
+Öppna sen hanteringskonsolen för IIS och under websites ta bort default website. Skapa en 
+ny site ge den namnet "Systemstats". Bind den till http(port 80) och https (port 443) på serverns hostname eller
+IP adress. Ge den sökvägen C:\Systemstats\Web\systemstats. 
+
+Om du binder siten till IP måste du ange ip i systemstats_config.php = $data_details_path om du binder till FDQN domännamn
+så måste du ange det i systemstats_config.php = $data_details_path. 
+
+Det kan vara nödvändigt att redigea sökvägar i web.config för att få custom 404/403 error medelanden att fungera.
+
+------------------------------------------------------------------------------------
+Grundinställningar som sätts i konfigurationsfiler!
+------------------------------------------------------------------------------------
+Lösenord och användarnamn till webbgränsnittet sätts i filen WebServer/systemstats/login.php i en PHP Array! 
+Standard är admin/admin.
+
+Följande filer ska redigeras för att anpassa miljön till din förvaltning.
+
+## WebServer/systemstats/systemstats_config.php
+Alla inkluderade filer i config/ mappen som heter _NXXX.php i slutet ska ha samma nummer som din forvaltningskod.
+I denna filen kan du också redigera html koden för länkarna till höger i toppen.   
+
+## WebServer/systemstats/*_NXXX.php dessa är exempel filer gör en kopia och byt namnet till din förvaltningskod tillexempel 
+itam_config_N200.php. I dessa filer ändra exempel till det som passar dig. 
+Sedan version 2.14 är det inte nödvändigt att ändra förvaltningsloggan utan det räcker med namnent i config filerna.
+
+------------------------------------------------------------------------------------
+Specialanpassning
+------------------------------------------------------------------------------------
+PHP filerna är kommenterade för att man ska förstå vad samtliga variabler gör. Vill du ändra antalet tabeller eller designen på 
+startsidan så får du redigera PHP koden i systemstats_ui.php och systemstats_tabeller.php, detta kräver stt du vet vad du gör 
+för att inte pajja applikationen :P
+
+------------------------------------------------------------------------------------
+Vi hoppas att ni kommer uppskatta och ha användning för Systemstats!
+Hälsningar från Eddy Hebib och Mattias From. Fastighetskontoret, juli 2021.
+

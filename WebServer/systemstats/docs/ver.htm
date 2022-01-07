@@ -1,0 +1,520 @@
+<!-- Versionsinfo fil: Denna filen inkluderas från ./ app rooten, alla sökvägar ska utgå från att filen inkluderas från /wwwroot/systemstats -->
+<!-- Content ta inte bort div -->
+<div class="container"> 
+<!--Versionsnumret höjs i systemstats_config.php. Behöver även höjas i /assets/docs/LICENSE.txt, i inloggningsscriptet 
+samt i Admin-modulen (SystemstatsAdmin.hta)-->
+<p>Systemstats senaste dokumentation finns på https://systemstats.se/docs </p> 
+<pre>
+
+Version 4.12 - 2022-01-07 - "Countless" (Current)
+Nyheter:
+ *En räkningsfunktion för sökrutan införd!
+  -Äntligen kan man snabbt få fram antalet sökträffar! Den nya knappen "Räkna antal" visar hur många träffar du får när du söker
+   under "Verksamhetens samtliga datorer".
+   <img src="docs/images/news/4.12-1.png">
+ *Möjlighet att välja månadslogg eller daglig logg för webbgränssnittet!
+  -Det är nu möjliget att välja om loggenfilen skall sparas per månad eller dag. Väljer man dag har loggen som tidigare
+   formatet 2022-01-01.txt. Väljer man månadslogg blir formatet 2022-01.txt.
+  -Inställningen är numera satt till månadslogg som standard. Detta ändrar du genom att sätta variabeln $isDateDaily till true
+   på rad 5 i logger.php.
+   <img src="docs/images/news/4.12-2.png">
+   <i>Månadslogg blir enklare att följa genom att du inte måste växla logg varje dag om du kör exempelvis BareTail.</i>
+ *Anpassningar av koden i skriptet och statistikmodulen för att känna av Windows 10 21H2.
+ *Fler bärbara datormodeller har lagts till i statistikmodulen.
+
+Version 4.11 - 2021-03-30 - "Doubtless"
+Nyheter:
+ *Loggningsfunktion för webbgränssnittet införd!
+  -Från och med nu loggas alla inloggningar, utloggningar samt missloggade inloggningsförsök mot webbgränssnittet.
+   Syftet är att öka säkerheten för applikationen. Loggarna är endast åtkomliga för medarbetare på IT-enheten.
+  -Loggarna anger datum, timestamp, IP-adress samt vilken användare som loggat in. För misslyckade inloggningsförsök
+   loggas även lösenordet!
+   <img src="docs/images/news/4.11-1.png">
+   <i>Med programmet BareTail kan du följa loggen i realtid och även sätta färger för olika händelser.</i>
+ *Anpassningar av koden i skriptet och statistikmodulen för att känna av Windows 10 20H2.
+ *Länken till persongalleriet ändrad
+  -Man kommer nu till det nya galleriet när man trycker på en användares namn.
+   <img src="docs/images/news/4.11-2.png">
+
+Version 4.10 - 2021-02-12 - "Labelless"
+Nyheter:
+ *Skriv ut etiketter direkt från webbgränssnittet
+  -Nu finns två utskriftsikoner till vänster om mail-knappen för respektive användares namn. En för Dymo Mobile Labeler och en för Leitz Icon. 
+   Med dem kan du skriva ut namnetiketter för användarna. Filen sparas automatiskt i hämtade filer när du klickar!
+  -Dessutom kan man skriva ut en etikett för datorns hårdvaruspecifikation med hjälp av den rosa utrksiftsikonen till höger om datornamnet. Detta 
+   kan vara användbart när man skall skrota en dator, då etiketten även innehåller checkboxar för om datorn är tagen ur raderad, tagen ur AD:t mm.
+   <img src="docs/images/news/4.10-1.png">
+  
+   <img src="docs/images/news/4.10-2.png">  <img src="docs/images/news/4.10-3.png">  <img src="docs/images/news/4.10-4.png">
+ *Enter-buggen i sökrutan fixad!
+  -Med möjligheten att anpassa tabellen (som kom i version 4.00) medföljde även en bugg. När man tryckte enter efter att man skrivit in
+   något i rutan (eller när man skannar in med streckkodsläsaren) triggas en refresh av hela sidan. Det är nu åtgärdat.
+
+Version 4.00 - 2020-07-10 - "Boundless"
+Nyheter:
+ *Bygg din egen tabell i webbgränsssnittet!
+  -Nu är inte längre huvudtabellen begränsad till en fast bredd där alla kolumner visas (vilket resulterade i en väldigt bred tabell
+   och en massa sidescrolling). Den nya knappen "Anpassa tabell" låter dig själv välja vilka kolumner som är intressanta och tabellen
+   byggs upp efter det. Dina val sparas dessutom i "local storage" och är kvar även efter att sidan refereshas / du stänger webbläsaren!
+   Knappar för "Standard", "Fullständig" och "Avmarkera alla" finns dessutom till hjälp i byggandet av din drömtabell. Innan man gjort 
+   sitt val får man en fullständig tabell.
+   <a href="docs/images/news/4.00-1.png" title="Den nya, anpassningsbara taballen. :) Klicka för större bild!" target="_blank"><img src="docs/images/news/4.00-1Small.png"></a>
+ *CSV-Fil byter namn till "DB-fil" (för huvudtabellen)
+  -För att kunna åtstadkomma förändringarna av huvudtabellen är Systemstats databas inte längre semikolon (;) separerad. Istället skrivs
+   html-taggar för "td" redan av inloggningsskriptet. Även om databasfilerna fortfarande har filformatet .csv är det inte längre några
+   kommaseparerade filer så som en CSV-fil bör vara. Därav namnbytet.
+ *BBS-erna omflyttade i webbgränssnittet
+  -För att minska behover av sidescrolling har vi flyttat om en del av BBS:erna (de färgade anteckningsrutorna) i webbgränssnittet.
+   Den gröna har flyttat upp och ligger nu bredvid Systemstats Safebox, medan den rosa har flyttats längst ner på sidan. BBS:erna
+   längst ner har förminskats och lagts under varandra, vilket också minskar behovet av att scrolla åt sidan. 
+ *Ny logga inne Systemstats Admin
+  -Nu har loggan inne i Systemstats Admin gjorts om så att den matchar Admin-modulens ikon, som har en nyckeln i mitten. Tidigare 
+   användes webbgränssnittets logga även i Systemstats Admin.
+   <img src="docs/images/news/4.00-2.png">
+
+Version 3.85 - 2020-07-03 - "Sleepless"
+Nyheter:
+ *Statistikmodulen utvecklad ytterligare
+  -Ny rad under "Lagersaldo" visar nu antalet lånedatorer som finns inne samt det totala antalet lånedatorer.
+  -Nu finns statistik över hur stor del av maskinparken som fått den nya namnstandarden för datornamn under 
+   "Namnstandard datorer".
+    <img src="docs/images/news/3.85-1.png">
+ *<a href="../splash.php" target="_blank">Systemstats Dashboard</a> (splash.php) omdesignad!
+  -Nu ligger Systemstats-loggan till vänster istället för i mitten av sidan. Till höger finns nu kundens logga.
+  -Rubriken "Operativsystems fördelning på: N200 Fastighetskontoret" byter namn till "Fördelning av operativsystem:"
+  -Rubriken "Statistik för: N200 Fastighetskontoret" byter namn till "Lagersaldo:" d.v.s. samma som i statistikmodulen.
+   Ny rad under "Lagersaldo" visar den nya statistiken för lånedatorer från statistikmodulen.
+  -Rubriken "Datortyper:" behåller sitt namn
+   Texten för "Stationära & Workstation" blir nu silverfärgad
+  -Den nya rubriken för "Namnstandard datorer:" införs. Här visas statistiken över nya/gamla datornamn från statistikmodulen.
+  -Rubriken "Systemstats Version och servermiljö:" justeras ned i storlek och byter namn till "Version och servermiljö":
+   Raderna under byter färg till lila.
+   Nu skrivs kodnamnet för Systemstats versionen samt kundens namn ut.
+  -Nu finns klockan från Systemstats Webbgränssnittet längst ner på sidan istället för knappen "Gå till Systemstats Web".
+   <a href="docs/images/news/3.85-DashOld.png" title="Gamla versionen. Klicka för större bild!" target="_blank"><img src="docs/images/news/3.85-DashOldSmall.png"></a> <a href="docs/images/news/3.85-DashNew.png" title="Nya versionen Klicka för större bild!" target="_blank"><img src="docs/images/news/3.85-DashNewSmall.png"></a>
+
+Version 3.84 - 2020-06-26 - "Aimless"
+Nyheter:
+ *Blankraden längst ner i tabellerna äntligen borta!
+  -En bugg som hängt med sedan vi byggde Systemstats 2016 är nu åtgärdad. Fram tills nu har en blankrad skrivits ut längst ner i varje
+   tabell. Detta sker redan genom en radbrytning i de enskilda CSV-filerna som sedan byggs ihop till en. Utan de här radbrytningen blir 
+   det bara en bred rad med all data i hela tabellen. %stsexp%\PrepCSV.ps1 som formaterar tabellen och rättar nordiska tecken tar nu 
+   även bort den sista raden i samtliga tabeller (som vi vet alltid är blank). Nedan syns den tidigare blankraden.
+   <img src="docs/images/news/3.84-1.png">
+ *Statistikmodulen justerad för ny namnstandard
+  -De nya datornamnen har gjort att statistiken över hur stor andel av maskinparken som är bärbara respektive stationära datorer
+   visar fel. Detta eftersom den utgår från att en dator börjar med "BN200" osv. Nu har modulen byggts om så att både de nya och
+   de gamla namnen räknas.
+  -Lagt till Windows 10 version 1909 som rullas ut inom kort.
+ *Systemstats Dashboard (splash.php) uppdaterad!
+  -Justerat koden så att även statistiken på Dashboarden visar rätt för bärbara/stationära datorer.
+  -Gjort om räknaren för Windows 10 / Windows 7 så att den istället räknar olika Windows 10-versioner. Just nu är 1809 och 1909 mest
+   aktuella.
+ *Menyn i webapplikationen justerad för datorer med låg upplösning
+  -Tidigare hamnade nedre delen av menyn (däribland logga ut-knappen) utanför skärmen. Nu är det justerat, så att texten
+   i menyn blir mindre på datorer med låg upplösning (exemelvis HP EliteBook 820 G1/G2).
+
+Version 3.83 - 2020-05-26 - "Seasons"
+Nyheter:
+ *Dynamisk inloggningsskärm!
+  -Nu ändras årstid på inloggningsskärmen automatiskt! Bakgrunderna har tidigare växlats manuellt, men från och med nu väljer
+   systemet bakgrunder beroende på vilken månad det är.
+   <img src="docs/images/news/3.83-1.png">
+ *Ny namnstandard för datornamn införs av Intraservice.
+  -Forstatt anpassningen till den nya namnstandarden. Nu körs en AD-Synk även för datorernas felloggar. Men istället för att felloggarna
+   som tillhör datorobjekt som inte längre finns i AD:t skall flyttas till "Legacy"-mappen (och därefter Systemstats Trashbin) hamnar de
+   i "%stslog%\History-Deleted". Där görs borttag manuellt. Om en dator som har en fellogg byter namn vid F12 flaggas alltså loggen upp,
+   genom att den hamnar i History-Deleted mappen (eftersom datorobjektet inte längre finns). Då kan man byta namn på felloggen, så att den 
+   matchar det nya datornamnet och därefter flytta tillbaka den till "%stslog%\History".
+   <img src="docs/images/news/3.83-5.png">
+ *Funktionen "Hemarbetsplats" byter namn (igen) till "Extern arbetsplats"
+  -Anledningen är att funktionen förutom utrustning till hemarbetsplatsen även skall täcka utrustning i de lokaler utanför huvudsiten som
+   kontoret har verksamhet i.
+ *Systemstats Admin är nu anpassad för datorer med medelhög upplösning! 
+  -Känner även av medelhöga upplösningen 2560 x 1440 (exempelvis EliteBook 840 G3/G4) och justerar upp storlek på text och knappar för den.
+   <img src="docs/images/news/3.83-3.png">
+ *Statistikmodulen
+  -Ny räknare som håller koll på hur många av våra maskiner som omfattas av "Köp". Den och räknaren för "Klient som tjänst", som infördes
+   i förra versionen ligger nu under "Avvikande ägandeform".
+  -Lagt till en ny bärbar datormodell (Zbook Studio G5). 
+
+Version 3.82 - 2020-05-07 - "Regardless"
+Nyheter:
+ *Ny namnstandard för datornamn införs av Intraservice.
+  -Lagt in de framtida datornamnen för samtliga datorer som idag finns i vårt OU i listorna med leveransdatum, leasingnummer och stöldskyddsnummer.
+   <img src="docs/images/news/3.82-4.png">
+ *Systemstats Admin är nu även anpassad för datorer med 4K-upplösning!
+  -Nu känner Systemstats Admin av vilken upplösning datorn har och justerar upp storleken för text, ikoner och bilder på
+   datorer med 4K skärmupplösning 3840 x 2160 (exempelvis EliteBook 840 G5/G6). Man slipper alltså zooma manuellt med CTRL+Scroll.
+   <img src="docs/images/news/3.82-1.png">
+ *Funktionen "Förråd" byter namn till "Hemarbetsplats"
+  -Knappen i webbgränssnittet och i Systemstats Admin som fram tills nu använts för att inventera bildskärmar i lager har nu 
+   bytt namn till "Hemarbetsplats". Här noteras den utrustning som lånas hem av användarna (främst under Corono-krisen). Det kan 
+   röra sig om bildskärmar, laddare, dockningsstationer mm. I tabellen syns utlämningsdatum. Håller man musen över utlämningsdatumet 
+   syns även vilken tekniker som lämnat ut utrustningen (infört 2020-04-29). Även uppgifter om användare, AD-konto, om enheten är 
+   utlämnad från lagret eller från användarens kontor, modell, serienummer och stöldskyddsnummer finns i tabellen.
+   <img src="docs/images/news/3.82-2.png">
+ *Statistikmodulen
+  -Ny räknare som håller koll på hur många av våra maskiner som omfattas av "Klient som tjänst".
+  -Lagt till nya bärbara datormodeller samt tagit bort gamla stationära modeller som ej är Windows 10-certade.
+  -Flyttat Plattor till högersidan (under Workstation) då antalet bärbara modeller ökar.
+   <img src="docs/images/news/3.82-3.png">
+
+Version 3.81 - 2020-02-14 - "Flawless"
+Nyheter:
+ *AD-synken utökad:
+  -Systemstats AD-Sync, som ansvarar för att arkivera och därefter ta bort filer kopplade till användare och datorer som inte längre finns i AD:t
+   har nu utökats till att även omfatta %stslog%\Office-mappen.
+ *Nu visas fler uppgifter för användaren i tabellen "Publika & delade datorer"!
+  -Om man håller musen över användarnamnet visas nu användarens fullständiga namn, eventuellt rumsnummer och anknytning.
+   <img src="docs/images/news/3.81-1.png">
+  -Om det är en dator som är markerad som "i lager" visas texten LAGER tillsammans med signaturen för den tekniker som markerat den som i lager 
+   om man håller musen över användarnamnet.
+  -Om det är en dator som är markerad för "leverans" visas texten LEVERANS tillsammans namnet på användaren som skall få datorn. Även signaturen
+   för den tekniker som markerat den för leverans visas om man håller musen över användarnamnet.
+ *Förändringar för tabellen till "Publika & delade datorer" och för post-it lapparna (BBS):
+  -Inställningen för om man vill visa eller dölja dessa hanteras nu inifrån menyn. Dessutom lagras ens val i en cookie, så inställningarna blir 
+   kvar när sidan laddas om.
+  -Går nu även att stänga menyn på högersida med ESC tangenten.
+
+Version 3.8 - 2020-01-17 - "Stainless"
+Nyheter:
+ *Förändringar för tabellen till "Publika & delade datorer" och för post-it lapparna (BBS):
+  -Tabellen för publika datorer är nu dold om standard. Trycker man på den nya knappen "Visa/dölj tabell" visas/döljs den. En animation körs
+   när tabellen visas/döljs.
+   <img src="docs/images/news/3.8-1.png">
+  -Post-it lapparna (BBS) visas som standard, men kan döljas med den nya knappen "Visa/dölj BBS". Även här körs en animation när man trycker
+   på knappen.
+   <img src="docs/images/news/3.8-2.png">
+ *Nu visas datorns totala diskstorlek om man håller musen över värdet i kolumen "MB kvar C:".
+
+Version 3.73 - 2019-09-18 - "Memoryless"
+Nyheter:
+ *Nu minns Systemstats vilket tema & även vilken omladdningstid man valt!
+  -Ditt val för tema i den nya menyn (kugghjulet längst upp till höger i webbgränssnittet) sparas nu i en Cookie. Systemstats kommer således
+   ihåg vilket tema du valt när sidan laddas eller efter du startat om webbläsaren/datorn. Cookien sparas i 30 dagar.
+   <img src="docs/images/news/3.73-1.png">
+  -Du kan även välja omladdningstid för sidan, så att den alltid håller dig uppdaterad med färsk data. Man kan välja allt ifrån 1 minut till att
+   inte ha någon automatisk omladdning alls. Detta sparas i samma cookie.
+   <img src="docs/images/news/3.73-2.png">
+
+Version 3.72 - 2019-08-26 - "SearchLess"
+Nyheter:
+ *Förbättrad sökfunktion med Systemstats SuperSearch!
+  -Funktionen "Sök användare/dator har uppdaterats med en ny sökfunktion. Istället för att behöva ange en "perfect match" vid sökning
+   räcker det nu att börja skriva, så får man upp förslag, d.v.s. på liknande sätt som vid sökning i huvudtabellen. Skillnaden mot huvudtabellen
+   är att man kan söka på alla användarnamn och datornamn i utvalda OU:n. För användare kan man dessutom söka på deras visningsnamn, rumsnummer 
+   eller telefonnummer (anknytning). Ett skript (%stsexp\SuperSearch.vbs%) körs med morgonkörningen och genererar en xml-fil på alla användar och
+   datorkonton i utvalda OU:n.
+   <img src="docs/images/news/3.72-1.png">
+  -En kugghjuls-knapp, som öppnar en meny om man klickar på den finns nu längst upp till höger i webbgränssnittet. Dit har valen för teman och 
+   även utloggnings-knappen flyttat.
+  -En länk till Systemstats Dashboard / Splashscreen finns nu i footern av sidan.
+
+Version 3.71 - 2019-05-31 - "Fortress"
+Nyheter:
+ *Ny funktion - Systemstats Safebox
+  -Nu finns möjlighet att lagra koder och lösenord i Systemstats. Längst upp, till höger om klockan och menyn hittar du nu
+   "Systemstats Safebox". Det är en nästan tom post-it ruta. Men trycker man på kassaskåps-ikonen och anger rätt kod fylls
+   den på med data, som uppdateras inifrån Systemstats Admin (BBS-funktionen, val 9).
+   <img src="docs/images/safebox.png">
+
+Version 3.7 - 2019-04-15 - "Speechless"
+Nyheter:
+ *Nu färgmarkerar Systemstats senast inloggade användaren om denne är datorns ägare!
+  -Användarens fullständinga namn markeras i gult över texten om han eller hon loggat in minst fem (5) gånger på datorn. Undantag är
+   publika datorer, som inte har någon enskild ägare.
+ *Antalet inloggningar på datorn syns nu i tabellen
+  -Håller man muspekaren över användaens fullständiga namn syns nu förutom texten Kontaktkort även totala antalet inloggningar på datorn.
+ *Mobilnummer över anknytningen
+  -Håller man muspekaren över 031-anknytningen visas nu användarens mobilnummer om sådant finns i formatet XXX-XXX XX XX.
+ *Chef syns i tabellen!
+  -Håller man muspekaren över AD-kontot visas nu förutom rumsnummer även vilken chef användaren har. För X-konton, som har sig själva
+   angivna som chef skrivs istället texten "Chef: Saknas!" ut.
+ *Tabellförklaringen förbättrad
+  -Nu kan man hålla muspekaren över symbolerna i tabellhuvudet och få upp samma text som finns i tabellförklaringen. Exempelvis: 
+   <a title="Datorns totala mängd arbetsminne (RAM)."><img src="../assets/docs/images/ram.png"></a> <a title="Tid då Windows startades."><img src="../assets/docs/images/clock.png"></a> <a title="Visningsnamnet för användaren som senast loggade in på datorn."><img src="../assets/docs/images/user.png"></a> <a title="Användarens inloggningskonto i domänen."><img src="../assets/docs/images/ad-account.png"></a> <a title="Användarens 031-anknytning (extra modul för vissa förvaltningar). Innehåller även signatur för vilken tekniker som markerat en dator som i lager."><img src="../assets/docs/images/ank.png"></a> <a title="Datorns hostname."><img src="../assets/docs/images/computer.png"></a> <a title="Datorns operativsystem."><img src="../assets/docs/images/os.png"></a> <a title=" Version av Microsoft Office som datorn kör."><img src="../assets/docs/images/office.jpg"></a> <a title="Datorns processor. Visar modell och klockfrekvens."><img src="../assets/docs/images/cpu.png"></a> <a title="Processorns totala antal kärnor."><img src="../assets/docs/images/core.png"></a> <a title="Antal logiska processorer (trådar)."><img src="../assets/docs/images/thread.png"></a>.
+
+Version 3.64 - 2019-04-05 - "Wireless"
+Nyheter:
+ *Nu känner Systemstats av om datorn har WWAN-kort!
+  -I tabellen visas nu en antenn med beskrivningen "WWAN-stöd" som visas om man håller muspekaren över den för de datorer som är utrustade
+   med WWAN-kort (3G/4G-modem). Därmed behöver man inte längre ange detta manuellt i form av kommentarer.
+
+Version 3.63 - 2019-03-29 - "Timeless"
+Nyheter:
+ *Nu finns möjlighet att välja bakgrundsbild
+  -Nu kan man istället för att välja en bakgrundsfärg ange en bakgrundsbild. Flera olika bakgrundsalternativ finns att välja mellan. 
+   CSS-mallarna växlas i realtid när man trycker på en knapp, vilket ger Systemstats en "tidlös" design. Även färger för text och länkar 
+   anpassas efter bakgrundsbilen.
+ *Bugg för rumsnummer korrigerad
+  -Buggen som gjorde att rumsnummer skrevs ut "Rum: ~0,50rum_part2" för användare som ej har ett rum angivet är nu rättad. Nu skrivs
+   istället "Rum: Saknas!" ut i tabellen. Gäller modulen för rumsnummer i AD.
+ *Kartdata-knapp införs (verksamhetsspecifik modul)
+  -Nu kopieras FK-Synka Kartdata ner till start-menyn för användare som loggar in på en dator med Kartdata-paketet pålagt. En check görs om
+   filen Kartdata.bat finns i Autostart för "All users" och skapar om så är fallet upp genvägen.
+  
+Version 3.62 - 2019-03-27 - "Darkness"
+Nyheter:
+ *Nu finns möjlighet att välja bakgrundsfärg
+  -Nu kan man välja mellan vit (standard) eller svart (dark) bakgrund. Förutom bakgrunden ändras även textfärgen, för att bli läsbar mot
+   bakgrunden.
+
+Version 3.61 - 2019-01-31 - "Endless"
+Nyheter:
+ *Nu aktiveras auto-refresh med en checkruta!
+  -I stället för att Systemstats laddas om var 10:e minut (vare sig man vill eller inte), för att se till att besökaren alltid sitter med
+   färsk data finns nu en checkbox i headern av sidan. Den heter "Ladda om sidan var 10:e minut:" och är urbockad "[ ]" som standard. Bockar man
+   i den kommer systemet ihåg det även när sidan laddas om (dock ej när man stänger webbläsaren/fliken). Vi rekommenderar att i regel bocka i 
+   rutan, för att Systemstats skall fortsätta vara "ändlöst". Men vid inventering/noggrannare genomgång av datorerna i tabellen bör den bockas 
+   ur, så att sidan inte laddar om mitt i.
+
+Version 3.6 - 2018-10-29 - "Nameless"
+Nyheter:
+ *Nya sökfunktion för huvudtabellen i webbgränssnittet!
+  -Nu kan man snabbt och enkelt söka efter text i tabellen för verksamhetens samtliga datorer. Sök-funktionen tar bort alla resultat som inte 
+   matchar, men behåller den översta raden med rubriker för kolumnerna (tabellsorteraren).   
+ *Rumsnummer och mailadress in i tabellen! 
+  -Rumsnummer, i formatet "Rum: XXXX" syns nu om man håller musen över ett ad-konto. Om rumsnummer saknas i användarens details-fil skrivs
+   "Rum: Saknas!" ut. Saknas filen helt, som vid första inloggning för en ny användare (filen genereras av ett vbskript som är förskjutet med
+    40 sekunder) skrivs ingen text för rum ut alls. Den dyker då upp vid nästa inloggning.
+  -Mailadress, samt en mailto-länk syns nu om man håller musen över mail-symboelen till höger om användarens namn. Om mailadress saknas i 
+   användarens details-fil skrivs ingen text ut. Mailto-länken öppnar då ett tomt mail, där man får fylla i mottagaradressen själv.  
+ *Förbättring av modulen för identifiering av Windows 10 version.
+  -I samband med Windows 10 version 1709 gjordes en ändring från Microsofts sida vad gäller versionsnumret. Nu ökar build-numret även inom en 
+   release, när större uppdateringar kommer. Vi använder som bekant ver-kommandot för att ta reda på vilken version av Windows som körs, samt
+   att (för Windows 10) även identifiera vilken release av Windows 10 som körs (1607, 1703, 1709 osv.) Detta kommando fungerar i hela Windows 
+   NT-familjen, hela vägen tillbaka till Windows NT 3.51. Vi har nu anpassat Systemstats-koden, så att den endast använder de fasta siffrorna 
+   i build-numret för att identifiera vilken release av Windows 10 datorn kör. De sista siffrorna från och med version 1709 ökar med tiden. För 
+   Windows 10 version 1709 (10.0.16299.726) använder vi alltså bara siffrorna 16299, som förblir konstanta oavsett uppdateringar. 
+   Siffran 726 i exemplet ovan ökar med uppdateringarna. Siffran 10.0 används för att avgöra att det är Windows 10 det handlar om.
+   
+Version 3.5 - 2018-08-24 - "Unicorn"
+Nyheter:
+ *Nya färgmarkeringar i tabellerna i webbgränssnittet!
+  -Nu färgmarkeras publika datorer lila, både i tabellen för publika datorer och i den för verksamhetens samtliga datorer. Dessutom kan man
+   hålla musen över dem i tabellen för samtliga datorer för att få veta vilken dator det är (texten från fältet "Beskrivning" i tabellen för
+   de publika datorerna visas då.
+  -Nu färgmarkeras datorer som har en kommentar i "glänsande gul" i tabellen för verksamhetens samtliga datorer. Precis som för de publika
+   datorerna kan man hålla musen över dem, men man ser istället datorns kommentar.
+  -Då färgmarkeringen i båda fall görs på datornamnet kan en dator inte vara både publik och ha en kommentar. Den publika datorns beskrivning
+   fungerar som kommentaren.
+ *Systemstats Admin:
+  -Två nya knappar som startar skript för att hantera publika datorer och datorer med kommentarer. Dessa skapar, tar bort eller uppdaterar
+   textfiler i %stsmod%\PUBLIC och %stsmod%\COMMENTS. Dessa ligger till grund dels för tabellen för publika datorer, men även för publika
+   datorers beskrivning och övriga datorers kommentarer i tabellen för verksamhetens samtliga datorer.
+ *Systemstats AD-Sync:
+  -Nu omfattar AD-synken även mapparna %stsmod%\PUBLIC och %stsmod%\COMMENTS. Med andra ord försvinner datorer som publika när de tas ur AD:t.
+   Även en kommentar från en dator försvinner. Däremot ligger felloggar alltid kvar, om de inte tas bort manuellt. Detta är by design.
+ *Systemstats web (Webbgränssnittet)
+  -Sett över applikationskod (PHP), gränssnittet (HTML,JS,CSS) och rensat upp onödig kod samt flyttat alla "assets" filer (Ej sckriptkod) (bilder,CSS mm) till en
+   mapp. Alla script (Javascript) till en egen mapp alla tredjeparts script och CSS bibliotek till en egen mapp samt alla "moduler" (PHP Script) till en egen mapp. 
+   Nu finns det bara en konfigurationsfil för alla kund installningar (cfg/config.php) denna inkluderas i systemstats_config.php.  i webroot/readme.md finns en förklaring
+   över webb filstrukturen och dokumentation för samtliga konfigurationsfiler. 
+  -Ny delmodul "Systemstats Network Tools" finns nu denna nås från huvudmenyn på startsidan. Här finns "Subnät" modulen och ett verktyg som håller koll på om 
+   servrar/vilken enhet som hellst som går att pinga är online eller inte (svara på ping). Samt framtida platsen för Systemstats IP-Dokumentations modul. 
+  -Server Uptime Winget på startsidan bredvid klockan. Konfigureras från filen mod/mod_servermonitor.php
+
+Version 3.11 - 2018-06-04 - "Reboot"
+Nyheter:
+ *Nya ikoner i webb UI för dator och AD-konto.
+ *Ny omstartsmodul
+  -Denna funktion kontrollerar med hjälp utav ett program vid namn uptime.exe datorns uptime. Efter detta så hämtar den ner antalet dagar
+   som datorn har varit igång och sätter denna siffra i variabeln %updays%. Om variabeln %updays% är 10 eller mer så körs ett vbscript
+   där användaren får välja om datorn skall startas om eller inte. Om använder trycker på ja så startas datorn om direkt, och om användaren
+   väljer nej så exitar vbscriptet.
+ *Ny postitlapp i web UI
+  -En ny blå postit lapp som befinner sig längst ner i web UI:t där alla receptionisters namn står och även deras AD-konto. Detta för att vi
+   ska kunna hålla bättre koll på vilka som är receptionister och inte.
+ *Ny funktion i Systemstats Admin-modulen:
+  -I denna funktion så har vi lagt till ett program vid namn "Multidesk" som kan användas på alla datorer för att få flera skrivbord på
+   samma dator. Tillexempel ett för Scripting, ett för Fjärrstyrning etc. Vi har även lagt till ett program som heter clock.exe som helt enkelt
+   är ett program som visar dagens datum och tid. Båda dessa program har blivit tillagda som knappar i Systemstats Admin-modulen. Båda dessa 
+   program kommer från Windows NT och är fria att använda utav Microsoft.
+
+Version 3.1 - 2018-05-23 - "Automagic"
+Nyheter: 
+ *Schemalagd AD-Synkning införd!
+  -Nu är en automatisk funktion för borttag av inaktuell data färdigutvecklad och aktiverad! Syftet med den är att rensa inaktuell data, 
+   delvis pågrund av GDPR. Filer kopplade till användare och datorer som inte längre finns i utvalda OU:n i AD:t flyttas varje dag kl 
+   07:00 till en LEGACY-mapp genom ett schemalagt skript på servern (%stsexp%\PROCESS.cmd). Innehåller i LEGACY-mappen flyttas i sin tur 
+   till en papperskorg (GARBAGE\Trashbin.sts) (genom %stsexp%\THROW_AWAY.cmd) den första måndagen i varje månad (kl 23:59). Precis innan 
+   flytten sker töms papperskorgen.
+
+Version 3.0 - 2018-05-07 - "Spring"
+Nyheter: 
+ *HAMster-integration införd! 
+  -Nu finns uppgifter om leveransdatum, leasingnummer och stöldskyddsnummer inlagda i huvudtabellen i webbgränssnittet.
+   Dessa hämtas genom en manuell export ur Stadens förvaltningsgemensamma ITAM-system HAMster och läggs i textfilerna "Leas.txt", Lev.txt
+   och "Theaft.txt" under %stslog%\HAMster (dit endast Systemstats-admins har ändra-behörighet. Vanliga användare behöver ha läsbehörighet
+   till mappen.
+  -En funktion i inloggningsskriptet tar inköpsdatumet för datorn och lägger på tre år (detta motsvarar garantin). Detta matchas sedan mot 
+   dagens datum. Båda datum får sina skiljetecken borttagna så att de blir tal. Sedan görs en jämförelse. Är datumet större än dagens datum 
+   skrivs leveransdatumet i huvudtabellen ut i grön färg. Detta innebär att datorn har garantitid kvar. Om datumet är mindre än dagens datum
+   skrivs leveransdatumet ut i röd färg. Detta innebär att garantin har gått ut.
+ *Statistik-modulen uppdaterad 
+  -Nu räknar modulen fram hur stor del av maskinparket samt hur många maskiner som har garanti kvar alternativt ingen garanti kvar. Detta görs
+   genom att räkna på en variabel som skrivs ut till huvudtabellen som en HTML-kommentar.
+  -Nu känner modulen även av och räknar på Windows 10 1709 som har börjat rullas ut i staden. Systemstats.cmd (som ligger till grund för datan
+   känner även av Windows 10 1803, som släpptes nyligen.
+ *Tabeller
+  -Nu har huvudtabellen fått ikoner istället för text på vissa kolumner. Det handlar om tid för uppstart och inloggning, Anknytning/Signatur 
+   (används för att visa vem som satt en dator i lager eller för leverans), OS, RAM, CPU, Kärnor, Trådar och Kommentar. Syftet är dels att 
+   förbättra den grafiska stilen, men även att minska bredden på cellerna (Speciellt för Kärnor och Trådar, som innan var väldigt breda).
+  -Nu skrivs inte sekunderna för uppstart och inloggning ut i tabellen (men det kan slås på i Systemstats.cmd). Detta är ännu ett led i att minska
+   totalbredden på huvudtabellen, som i denna version totalt sett ökat pga. införande av inköpsdatum, leasingnummer och stöldskyddsnummer från HAMster.
+  -Nu markeras även datorer i tabellen för Publika & delade datorer som gröna (när de sätts i lager) eller orange (när de markeras för leverans).
+   Då kolumnen "Användare" saknas i tabellen görs istället färgmarkeringen på texten i kolumnen beskrivning.
+ *Webbgränssnittet
+  -Städat i CSS, JavaScript. Skapat fler variabler och fyllt på med kommentarer i konfigurationsfiler.
+  -Versionshistoriken visas nu i en ram.
+	
+Version 2.51 - 2018-04-10 - "Crystal Blue"
+Nyheter: 
+ *Ny design på Post-it-lappar 
+  -Post-it-lapparna längst ner har designats om. Ytterligare en Post-it för telefonnummer har tillkommit. Dessutom har IP-dokumentationen
+   flyttats ner en rad.
+ *Rättningar
+  -Mindre rättning i Systemstats Admin när det gäller miljövariblerna den anropar när man trycker på någon av knapparna. Problemet
+  var att %stsadm% som sätts först när Systemstats Admin startar fungerar först nästa gång man startar Systemstats Admin. Man fick
+  med andra ord ett felmeddelande om man klickade på någon av knapparna första gången. Nu anropar den istället %stsmod%\SystemstatsAdmin.
+  %stsmod% sätts redan när Systemstats-paketet går ut till datorn.
+
+Version 2.50 - 2018-03-15 - "Emerald"
+Nyheter: 
+ *En ny Post-it-lapp för Ansvar tillagd längst ner i webbgränssnittet. Den redigeras precis som de andra från SystemstatsAdmin
+  och tanken är att den skall innehålla information om vem som är systemägare/systemförvaltare eller supportansvarig för 
+  olika applikationer som kan generera supportärenden.
+ *Nu visas rumsnummer och adress när man söker på en användare i Systemstats. Detta hämtas från AD:t.
+ *Nu används miljövariabler av skripten. Dessa skjuts ut som systemvariabler med SystemstatsClient.
+  Systemvariabler kräver admin-rättigheter för att sättas.
+   -Variablerna är:
+		stscnr=Kundnummer
+		stscst=Kundens namn
+		stslog=Vanligtvis \\Server\Logs$
+		stsmod=Vanligtvis \\Server\Scripts$\MODULES\
+		stsscr=Vanligtvis \\Server\Scripts$
+		stssrv=Servernamn
+ *Även systemstats admin använder miljövariabler. Skillnaden är att dessa är användarvariabler. Dessa 
+  sätts i launchern för Systemstats Admin, förutsatt att man angivit rätt lösenord. Användarvariabler
+  gäller bara för den inloggade användaren och kräver till skillnad från systemvariabler inte admin-rättigheter.
+   -Varibalerna är:
+		stsadm=Vanligtivs \\Server\Scripts$\MODULES\SystemstatsAdmin
+		stsdev=Frivillig, vanligtivs \\Server\Dev$\
+		stsexp=Vanligtivs \\Server\Uptime_Export$
+		stsweb=http://server.systemstats.se/Kundnummer
+		stswww=Vanligtvis \\Server\wwwroot$ (om webbservern finns på samma nätverk).
+		
+Version 2.23 - 2018-02-20 - "Green Dragon"
+Nyheter: 
+ *Ny funktion - "Förråd". Gör det enkelt att inventera skärmar i Systemstats Admin. Dessa presenteras
+  sedan i webbgränssnittet under "Förråd".
+ *Problemet med att "é" med apostrof syns som "," är nu korrigerat! Detta har varit ett problem sedan första
+  versionen, vilket har gjort det svårt att söka efter vissa personer i tabellen.
+ *Tagit bort serienummer från tabellen för Publika & dealade datorer och gjort tabellen och menyn mindre så att hela
+  anslagstavlan syns bredvid tabellen vid en upplösning på minst 1280x1024.
+ *Nya inloggningsbakgrunder för webbgränssnittet med vintertema.
+ *Ny logga i .gif-format, där kugghjulet till Systemstats snurrar (behöver dock snyggas till).
+ *Filstrukturen i webbmodulen upprensad.
+ *Ny statistikportal, lämplig för att visa på skärm under utveckling (kräver ej inloggning).
+ *UI2 planerna är skrotade, men delar av koden har återanvänts.
+ *En klocka med tid och datum har lagts till i webbgränssnittet!
+ *Nu visas BIOS-version och BIOS-versionens datum när man söker på en dator i webbgränssnittet.
+ *Statistikmodulen innehåller nu även statistik över fördelnigen mellan stationära och bärbara datorer
+  samt hur många av datorerna som är markerade för leverans eller som i lager.
+
+Version 2.22 - 2018-01-15 - "Cold"
+Nyheter: 
+ *Ny funktion - BBS (Bulletin Board System). Nu finns fyra digitala post it-lappar i olika färger i webbgräsnittet. Även en
+  för IP-dokumentation längst ner på sidan. Dessa uppdateras inifrån Systemstats Admin.  
+ *Systemstats Admin - Ny knapp - "BBS" - Gör det möjligt att uppdatera post it-lapparna i webbgränssnittet. Dessa kan dessutom 
+  behörighetsstyras (vilket görs på filnivå på sharen).
+ *Systemstats Admin - Ny knapp - "Kartdata" - Gör det möjligt att starta kartdata hämtning även för datorer som inte hunnit få paketet
+ *Systemstats Admin - Ny knapp - "C$" - Gör det möjligt att ansluta till C-disken på en annan dator i nätverket. Kräver V3-konto.
+ *Systemstats Admin - Ny knapp - "Redigera konfigurationsfiler" - Under utveckling...
+ *Systemstats Admin - Ny knapp - "Admin-genvägar" - Öppnar mappen AdminGenvägarFK i SystemstatsAdmin-katalogen. Innehåller bra
+  genvägar för IT-personal.
+
+Version 2.21 - 2017-12-12 - "Snow"  (Ingen namnändring på grund av bakgrundsförändringar.)
+ Nyheter: 
+  *Större förändringar av CSS och JavaScript kod. Alla CSS filer finns nu i ./css/ och alla JavaScript filer förutom "systemstats.main.js" ligger i ./lib/
+  *Rensat bort en massa gamla filer från webapplikationen. Uppdaterat licens information ./assets/docs/oss.html. 
+  *Testversion av "UI2" (Systemstats Mobil Anpassat UI) finns nu, man når UI2 genom att logga in via ./login2.php istället för den vanliga ./login.php adressen.
+  *Uppdaterat server side script som genererar Systemstats.csv en till Systemstats.csv fil genereras nu i ./data/ui2/ för att användas i tabellen i ui2.php
+  *Infört Google Analytics.
+
+Version 2.21 - 2017-12-12 - "Snow" 
+ Nyheter:
+  *Nu finns möjlighet att fylla i leveransdatum när en dator markeras för leverans från Systemstats Admin. Datumet kan
+   även lämnas blankt och är främst till för leveranser till nyanställda snarare än datorbyten. Datumet visas sedan under
+   AD-konto i webbgränssnittet. Detta innebär att om man sorterar efter AD-konto syns lagerdatorer och datorer för leverans
+   utan datum högst upp. Därunder ligger datorer för leverans med datum, sorterade efter datumet. Det blir på så vis enkelt
+   att få en överblick över när ny personal börjar eller när en dator skall levereras.
+  *Statistikmodulen - Lagt till två nya datormodeller samt tagit bort en gammal modell.
+  *Rapportmodulen - Backat förändringen av hur rapporterna öppnas (som infördes i version 2.15), då det blir problem 
+   med bland annat scrollning i Internet Explorer.
+  *Nu behöver endast versionsnumret höjas på ett ställe i webbgränssnittet vid ny version. (Dock måste det fortfarande 
+   ändras i license-filen, inloggningsscriptet samt i adminmodulen. 
+  *Gjort så att rapporten för diskanvändning och inmatningen av variabler (var.vbs) skippas när man markerar en dator i 
+   lager eller för leverans. Detta för att inte få med lagerdatorer i räkningen och tabellen. Detta gäller endast när man
+   sätter en dator i lager. När den lämnats ut och användaren loggar in fungerar det som vanligt.
+  *Lagt till en knapp i Systemstats Admin för att öppna Etikettmallar (Leitz Icon).
+  *Förbättrat och snyggat till koden i modulen för borttag av datorer i Systemstats Admin.
+   
+Version 2.2 - 2017-12-07 - "Rain" 
+ Nyheter:
+  *Ny modul, Var.vbs (testkörs, ej aktiverad ännu!), för att ta fram använt utrymme i MB på H: OneDrive och skrivbord. 
+   Ingen info om personlig data samlas in. Informationen finns sedan att se i Systemstats Webbgränssnitt under "Sök 
+   användare/dator" och sammanställs dessutom i en helt egen tabell som finns åtkomlig längst ner (ikonen med penseln).
+  *Nu loggas borttag av datorer ur Systemstats med datum för borttaget samt info om vem som tog bort datorn. Detta för att
+   enkelt kunna få fram datorer som nyligen tagits bort, men som man glömt lyfta ur AD:t eller parkera/avyttra i HAMster.
+
+Version 2.15 - 2017-11-29 - "Colors"
+ Nyheter:
+  *Möjlighet att testa nytt gränssnitt för huvudsidan och inloggningssidan.
+  *Nu blir texten LAGER i webbgränssnittet grön för datorer som sätts i lager.
+  *Nu blir texten LEVERANS i webbgränssnittet orange för datorer som markeras för leverans.
+  *Växlat färg på knapparna "Sätt dator i lager" och "Slutför för leverans" i Systemstats Admin, så att de skall
+   matcha färgerna i webbgränssnittet. Tidigare var lager orange och leverans grön.
+  *Avaktiverat tabellen "Testmaskiner för paketering hos Intraservice" men låtit koden ligga kvar.
+  *Rapporterna öppnas i nya fönster i stället för i nya flikar. Dock finns inga "scrollbars" när Systemstats körs med
+   Internet Explorer, vilket medför att man ej ser hela rapporten om man inte markerar en rad och drar sig ner med musen...
+  
+Version 2.14 - 2017-10-04 - "Foxtrott"
+ Nyheter:
+  *Ny rapportmodul som visar alla konton med plusbehörighet i den förvaltningen Systemstats körs i. 
+  *Nu visas statistik på hur många olika Windows 10 versioner som körs i förvaltningen (Baseras på Build nummer).
+  *Versionsnummret i footern är nu en länk till denna filen. 
+  *Datan i kolumnen för Office-version skrivs numera ut "Office 2016" i stället för bara "2016" osv. Detta för att göra
+   statistikmodulens räknare med exakt (som söker i hela tabellen), då "2016" eller "2007" kan finnas i exempelvis ett 
+   serienummer.
+  *Ny modul för att se stadens subnät. Nätverksikonen i footern tar dig dit.
+
+Version 2.13 - 2017-09-29 - "Light"
+ Nyheter:
+  *Buildnumret i Windows 10 används nu för att identifiera vilken Windows 10-version datorn kör. Numret skrivs sedan
+   ut i webbgränssnittet som exempelvis "Windows_10_1607". Detta påverkar inte statistikmodulen, som fortfarande räknar
+   med alla dessa som Windows 10. Versioner vi identifierer är: 15.11, 16.07 och 17.03.
+
+Version 2.12 - 2017-09-11 - "Yume"
+ Nyheter: 
+  *Felhanteringssystem för datorer. En dator som har haft ett fel får nu ett rött utropstecken i webbgränssnittet som 
+   länkar till en textfil. Felinformationen ändras inifrån Systemstats Admin. Felinformtion tas även bort därifrån och 
+   finns kvar även om en dator F12:as eller tas ur Systemstats och domänen (ifall den kommer tillbaka).
+   
+Version 2.11 - 2017-08-XX - "Summer"
+ Nyheter:
+  *Möjlighet att visa/dölja tabellerna i webbgränssnittet.
+
+Version 2.1 - 2017-07-20 - "Nightmare"
+
+Version 2.0 - 2017-06-XX - "Sunflower"
+
+Version 1.0 - 2016-11-18
+
+<!--Version 3.0 "<Insert codename>":
+This version is under development... 
+-->
+ </pre>
+
+</div> <!-- Content ta inte bort div -->

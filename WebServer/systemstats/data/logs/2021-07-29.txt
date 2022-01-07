@@ -1,0 +1,5 @@
+
+2021-07-29 - 12:56:11 - 10.12.19.201 har loggat in med användarnamn: tekniker
+2021-07-29 - 13:00:54 - 10.12.19.201 har loggat ut med användarnamn: tekniker
+2021-07-29 - 13:01:00 - 10.12.19.201 har loggat in med användarnamn: tekniker
+2021-07-29 - 13:22:46 - 10.12.19.201 har loggat ut med användarnamn: tekniker

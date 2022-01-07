@@ -1,0 +1,260 @@
+Grattis! Du har nu installerat Systemstats Script Server.
+
+Följande återstår att konfigurera efter installationen av Systemstats Script Server:
+
+------------------------------------------------------------------------------------
+Rättigheter
+------------------------------------------------------------------------------------
+Sökvägarna C:\Systemstats\Scripts och C:\Systemstats\Logs har delats i samband med installationen och finns tillgängliga som 
+\\Servernamn\Scripts$ och \\Servernamn\Logs$, där "Servernamn" motsvarar Systemstats Serverns hostname. Det är av säkerhetsskäl 
+viktigt att rätt rättigheter sätts.
+
+Gör så här:
+[ ] Tilldela behörigheter enligt följande under Säkerhet på Scripts$
+	Ge System och Administratörer på servern Fullständig behörighet.
+	Ge behörighetsgruppen användare läsbehörighet.
+	-Dvs "Läsa och köra", "Visa mappinnehåll" samt "Läsa".
+	Inga andra konton (förutom ansvarig för Systemstats bör få ändra-åtkomst till mappen.)
+
+[ ] Tilldela behörigheter enligt följande under Säkerhet på Logs$
+	Ge System och Administratörer på servern Fullständig behörighet.
+	Ge behörighetsgruppen användare ändra-behörighet.
+	-Dvs "Ändra", "Läsa och köra", "Visa mappinnehåll", "Läsa" samt "Skriva".
+
+[ ] Tilldela behörigheter enligt följande under Säkerhet på Export$
+	Ge System och Administratörer på servern Fullständig behörighet.
+	Inga andra konton (förutom ansvarig för Systemstats bör få läsa eller ändra-åtkomst till mappen.)
+
+------------------------------------------------------------------------------------
+Inloggningsskript
+------------------------------------------------------------------------------------
+[ ] Redigera Systemstats.cmd i Skriptsökvägen (Standardsökväg C:\Systemstats\Scripts)
+	#Grundinställningar
+		-Byt ut "ittekniker" mot användarnamn för it-tekniker på raden:
+			if "%username%" == "ittekniker" goto :IT
+			* Endast de användare som är med i listan kommer att få genvägar för systemstats kopierade till sitt skrivbord.
+			* Om det finns flera it-tekniker behövs en rad för varje tekniker
+------------------------------------------------------------------------------------
+Rapporter från Active Directory (frivillig funktion)
+------------------------------------------------------------------------------------
+Om du frångått standardsökvägen C:\Systemstats\Export behöver även följande rader
+ändras i filerna nedan.
+	strWritePath = "C:\Systemstats\Export" & strFile
+	strDirectory = "C:\Systemstats\Export"
+
+[ ] Redigera Accounts.vbs i Exportsökvägen (Standardsökväg C:\Systemstats\Export)
+	Byt ut "XXX", "YOURDOMAIN" och "LOCAL" mot de värden som gäller för ditt AD i raden:
+		Set objOU = GetObject("LDAP://OU=XXX,OU=XXX,OU=XXX,DC=YOURDOMAIN,DC=LOCAL")
+	Exempel:
+		Set objOU = GetObject("LDAP://OU=Users,DC=ad,DC=systemstats,DC=se")
+	
+[ ] Redigera Accounts-Admin.vbs i Exportsökvägen (Standardsökväg C:\Systemstats\Export)
+	Byt ut "XXX", "YOURDOMAIN" och "LOCAL" mot de värden som gäller för ditt AD i raden:
+		Set objOU = GetObject("LDAP://OU=XXX,OU=XXX,OU=XXX,DC=YOURDOMAIN,DC=LOCAL")
+	Exempel:
+		Set objOU = GetObject("LDAP://OU=Admin,DC=ad,DC=systemstats,DC=se")
+
+[ ] Redigera Accounts-Disabled.vbs i Exportsökvägen (Standardsökväg C:\Systemstats\Export)
+	*Den här koden söker efter inaktiverade konton i AD:t. Sökning sker även i under-OU:n!
+
+	Byt ut "XXX", "YOURDOMAIN" och "LOCAL" mot de värden som gäller för ditt AD i raden:
+		"<GC://ou=XXX,ou=XXX,ou=XXX,dc=YOURDOMAIN,dc=LOCAL>;(objectCategory=User)" & _
+		";userAccountControl,name,whenCreated,displayName;subtree" 
+	Exempel:
+	 	"<GC://ou=Users,ou=,dc=ad,dc=systemstats,dc=se>;(objectCategory=User)" & _
+		";userAccountControl,name,whenCreated,displayName;subtree" 
+
+[ ] Redigera Accounts-Full.vbs i Exportsökvägen (Standardsökväg C:\Systemstats\Export)
+	Byt ut "XXX", "YOURDOMAIN" och "LOCAL" mot de värden som gäller för ditt AD i raden:
+		Set objOU = GetObject("LDAP://OU=XXX,OU=XXX,OU=XXX,DC=YOURDOMAIN,DC=LOCAL")
+	Exempel:
+		Set objOU = GetObject("LDAP://OU=Users,DC=ad,DC=systemstats,DC=se")
+
+
+[ ] Redigera Computers.vbs i Exportsökvägen (Standardsökväg C:\Systemstats\Export)
+	*Den här koden är gjord för att leta efter datorer i två OU:n, ett för bärbara och ett för stationära datorer.
+	Detta kan givetvis ändras.
+	
+	Byt ut "Bärbara/Stationära Datorer", "YOURDOMAIN" och "LOCAL" mot de värden som gäller för ditt AD i raden:
+	Set objOU = GetObject("LDAP://OU=Bärbara Datorer,OU=XXX,OU=XXX,DC=YOURDOMAIN,DC=LOCAL")
+	Set objOU = GetObject("LDAP://OU=Stationära Datorer,OU=XXX,OU=XXX,DC=YOURDOMAIN,DC=LOCAL")
+
+	Exempel:
+	Set objOU = GetObject("LDAP://OU=Bärbara Datorer,OU=Hårdvara,OU=XXX,DC=YOURDOMAIN,DC=LOCAL")
+	Set objOU = GetObject("LDAP://OU=Stationära Datorer,OU=Hårdvara,OU=XXX,DC=YOURDOMAIN,DC=LOCAL")
+
+[ ] Redigera Computers-Disabled.vbs i Exportsökvägen (Standardsökväg C:\Systemstats\Export)
+	*Den här koden söker efter inaktiverade konton i AD:t. Sökning sker även i under-OU:n!
+	*Den här koden läser några attribut från datorobjektet i AD:t som i exempel-AD:t fyllts på med data om maskinen. 
+	Exempelvis serienummer, datormodell mm. har här matats in i AD:ts oanvända attribut "homePhone" och "homePostalAddress".
+
+	Byt ut "XXX", "YOURDOMAIN" och "LOCAL" mot de värden som gäller för ditt AD i raden:
+	"<GC://ou=XXX,ou=XXX,ou=XXX,dc=YOURDOMAIN,dc=LOCAL>;(objectCategory=Computer)" & _
+	";userAccountControl,name,whenCreated,homePhone,homePostalAddress;subtree"
+
+[ ] Redigera SuperSearch.vbs i Exportsökvägen (Standardsökväg C:\Systemstats\Export)
+	*Den här koden söker användare och datorer i AD:t för att indexera dessa. Det används sedan för indexering till 
+	 funktionen "Sök anv/dator" i webbgränssnitter.
+
+	 Byt ut:
+ 	 OU=Standard,OU=Konton,OU=Skantefjall,DC=skantefjall,DC=local
+	 OU=Laptops,OU=Datorer,OU=Skantefjall,DC=skantefjall,DC=local
+	 OU=Desktops,OU=Datorer,OU=Skantefjall,DC=skantefjall,DC=local
+	
+	 Mot de värden som gäller för ditt AD.
+------------------------------------------------------------------------------------
+Schemaläggningar
+------------------------------------------------------------------------------------
+[ ] Skapa en ny Schemalagd aktivitet vid namn "Systemstats Log Generator"
+	Gör följande inställningar under respektive flikar:
+		Allmänt:
+		-Välj det lokala SYSTEM-kontot vid "Använd följande användarkonto när aktiviteten körs".
+		Valet "Kör oavsett om användaren är inloggad eller inte." kommer nu att aktiveras automatiskt.
+		-Markera checkboxen "Kör med högsta privilegier".
+		Utlösare:
+		-Välj "Ny" och ställ in varje dag kl 06:00. 
+		-Välj Upprepa var 1:e dag.
+		-Markera checkboxen "Upprepa aktiviteten varje:" och välj "5 minuter" under en varaktighet på 1 dag.
+		-Markera checkboxen "Aktiverad". Välj OK.
+		Åtgärder:
+		-Välj "Ny" och välj "Stata ett program" under Åtgärd. Ange enligt nedan under "Program eller skript:"
+		 C:\Systemstats\Export\export-logs-to-web.cmd
+		 Välj OK.
+
+[ ] Skapa en ny Schemalagd aktivitet vid namn "Systemstats Report Generator"
+	Gör följande inställningar under respektive flikar:
+		Allmänt:
+		-Välj det lokala SYSTEM-kontot vid "Använd följande användarkonto när aktiviteten körs".
+		Valet "Kör oavsett om användaren är inloggad eller inte." kommer nu att aktiveras automatiskt.
+		-Markera checkboxen "Kör med högsta privilegier".
+		Utlösare:
+		-Välj "Ny" och ställ in varje dag kl 06:30.
+		-Välj Upprepa var 1:e dag.
+		-Markera checkboxen "Aktiverad". Välj OK.
+		Åtgärder:
+		-Välj "Ny" och välj "Stata ett program" under Åtgärd. Ange de rapportskript du vill skall köras
+		 ett efter ett och upprepa processen tills du fått med alla.
+		 *Rapportskripten behöver först redigeras och ställas in efter ditt AD. Se sektionen
+		  "Rapporter från Active Directory (frivillig funktion)" ovan.
+		 Följande rapporter finns att lägga till:
+		 C:\Systemstats\Export\Accounts.vbs
+		 C:\Systemstats\Export\Accounts-Admin.vbs
+		 C:\Systemstats\Export\Accounts-Disabled.vbs
+		 C:\Systemstats\Export\Computers.vbs
+		 C:\Systemstats\Export\Computers-Disabled.vbs
+		 C:\Systemstats\Export\SuperSearch.vbs
+		 Välj OK.
+
+[ ] Skapa en ny Schemalagd aktivitet vid namn "Systemstats Server Uptime Generator"
+	 Gör följande inställningar under respektive flikar:
+		Allmänt:
+		-Välj det lokala SYSTEM-kontot vid "Använd följande användarkonto när aktiviteten körs".
+		Valet "Kör oavsett om användaren är inloggad eller inte." kommer nu att aktiveras automatiskt.
+		-Markera checkboxen "Kör med högsta privilegier".
+		Utlösare:
+		-Välj "Ny" och ställ in "Vid start".
+		-Markera checkboxen "Aktiverad". Välj OK.
+		Åtgärder:
+		-Välj "Ny" och välj "Stata ett program" under Åtgärd. Ange enligt nedan under "Program eller skript:"
+		 C:\Systemstats\Export\gen_server_uptime.cmd
+		 Välj OK.
+
+------------------------------------------------------------------------------------
+Testa
+------------------------------------------------------------------------------------
+Om du gjort ovan nämnda steg är det nu dags att testa Inloggningsskriptet på en klient!
+
+Från en klient:
+
+Öppna utforskaren och gå till \\Servernamn\Scripts$ och kör filen SetSystemstatsVariables.cmd
+(du kan även köra den här installationen på en klient och välja "4 - Ange miljövariabler (på klienter)"
+-Ange samma information som du angav när du installerade servern.
+
+Öppna utforskaren och gå till \\Servernamn\Scripts$ och kör filen Systemstats.cmd
+-Verifiera att:
+[ ] En .csv-fil med datornamnet som filnamn skapas på %stslog% (\\Servernamn\Logs$)
+[ ] En .csv-fil med datornamnet som filnamn skapas på %stslog%\Apps (\\Servernamn\Logs$\Apps)
+[ ] En .txt-fil med datornamnet som filnamn skapas på %stslog%\Details (\\Servernamn\Logs$\Details)
+	-Detta skript är tidsförskjutet och det kan ta upp till en minut innan filen skapas.
+[ ] En .txt-fil med användarnamnet som filnamn skapas på %stslog%\Details (\\Servernamn\Logs$\Details)
+	-Detta skript är tidsförskjutet och det kan ta upp till en minut innan filen skapas.
+
+Från servern:
+
+Kör den schemalagda aktiviteten "Generate Systemstats Logs".
+-Verifiera att
+[ ] Systemstats.csv och Systemstats-Nodric.csv skapas i C:\Systemstats\Export
+[ ] Systemstats.csv skapas i %stsweb%\data
+[ ] En .csv-fil med datornamnet som filnamn skapas i %stsweb%\data\apps
+[ ] En .txt-fil med datornamnet som filnamn skapas i %stsweb%\data\details
+[ ] En .txt-fil med användarnamnet som filnamn skapas i %stsweb%\data\details
+
+Kör den schemalagda aktiviteten "Generate Systemstats Reports".
+-Verifiera att
+[ ] Accounts.txt, Accounts-Admin.txt, Accounts-Disabled.txt och Accounts-Plus.txt skapas i C:\Systemstats\Export\Accounts
+[ ] Computers.txt, Computers-Disabled.txt skapas i C:\Systemstats\Export\Computers
+[ ] Accounts.txt, Accounts-Admin.txt, Accounts-Disabled.txt och Accounts-Plus.txt skapas i %stsweb%\data\accounts
+[ ] Computers.txt, Computers-Disabled.txt skapas i %stsweb%\data\computers
+
+
+------------------------------------------------------------------------------------
+Installera klienten på datorer i nätverket
+------------------------------------------------------------------------------------
+I undermappen SystemstatsClient finns instruktioner hur du sätter upp klienten på datorerna.
+
+Två saker behöver göras:
+A. Klienten behöver få variablerna för Systemstats satta.
+Öppna utforskaren och gå till \\Servernamn\Scripts$ och kör filen SetSystemstatsVariables.cmd
+(du kan även köra den här installationen på en klient och välja "4 - Ange miljövariabler (på klienter)"
+-Ange samma information som du angav när du installerade servern.
+
+B. SystemstatsClient.cmd behöver kopieras till %programdata%\Microsoft\Windows\Start Menu\Programs\StartUp
+-Nu körs skriptet vid inloggning för alla användare på datorn.
+
+*Det finns även möjlighet att bygga en kompilerad klient. Mer info finns i undermappen SystemstatsClient.
+
+------------------------------------------------------------------------------------
+Ange IT-personal och redigera genvägar
+------------------------------------------------------------------------------------
+De genvägar för Systemstats som kopieras till skrivbordet för IT-personal (dessa användare anges nästan längst ned i inloggningsskriptet, 
+dvs \\Servernamn\Scripts$\Systemstats.cmd) behöver justeras för att peka på Systemstats Servern. Gå till \\Servernamn\Scripts$\Modules och ändra:
+[ ] Systemstats Admin.lnk så att:
+	Mål är: %stsmod%\SystemstatsAdmin\launcher.bat
+	Starta i %stsmod%\SystemstatsAdmin
+[ ] Systemstats.url så att:
+	Mål är: http://IP.ADRESS.TILL.SERVERN
+[ ] Systemstats Uppdatera.lnk så att:
+	Mål är: %stsscr%\Systemstats.cmd
+	Starta i är: %stsscr%
+
+*Tänk på att IT-tekniker behöver ha ändra-rättigheter till %stsmod%. Är det många som skall hantera Systemstats kan det vara bra att skapa
+ begörighetsgrupper i Windows.
+
+------------------------------------------------------------------------------------
+Admin-modulen
+------------------------------------------------------------------------------------
+Admin-modulen styr vad som visas i webbgränssnittet. Den erbjuder även lite extra verktyg som felhistorik för datorer, samt 
+möjlighet att snabbt och enkelt ta bort en dator ur Systemstats. Man kan även markera datorer som i lager eller för leverans.
+
+Admin-modulen kan startas genom %stsmod%\SystemstatsAdmin\SystemstatsAdmin.hta eller via den lösenordsskyddade launchern
+%stsmod%\launcher.bat. Lösenordet sätts i koden. Detta innebär dock ingen säkerhetsrisk, då rättigheterna modulen är beroende 
+av satts i felsystemet. Detta gjorde du i avsnittet ovan för rättigheter.
+
+Följ stegen nedan för att komma igång!
+
+[ ] Redigera launcher.bat i SystemstatsAdmin i Modulsökvägen (Standardsökväg C:\Systemstats\Scripts\Modules\SystemstatsAdmin)
+	Ändra lösenordet genom att byta ut "adminpass" till ett önskat lösenord på raden:
+		if !Line! == adminpass goto :accessgranted
+
+[ ] Redigera SystemstatsAdmin.hta i SystemstatsAdmin i Modulsökvägen (Standardsökväg C:\Systemstats\Scripts\Modules\SystemstatsAdmin)
+	Använd sökfunktionen och ändra SERVER_NAME till Systemstats-serverns namn.
+	Använd sökfunktionen och ändra Customer C001 till det som satts för miljövariablerna %stscst% och %stscnr%
+	Är du osäker på vad du valde kan du köra kommandot "set" i cmd.
+------------------------------------------------------------------------------------
+OBS! Om du frångått standardsökvägarna vid installationen kan fler justeringar
+behöva göras. Sökvägar i fler skript behöver då ändras!
+------------------------------------------------------------------------------------
+
+Vi hoppas att ni kommer uppskatta och ha användning för Systemstats!
+Hälsningar från Eddy Hebib och Mattias From, juli 2021.
+

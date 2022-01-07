@@ -1,0 +1,374 @@
+﻿<!-- 
+Systemstats Adminklient Version 1.0
+(C) Eddy H 2016-2017
+(C) 2021 eddy@systemstats.se
+<!--
+#################################################################################
+## 		Systemstats Version 4.11 "Doubtless" - 2021-08-30 	        ##
+## 			   © 2016-2021 Göteborgs Stad     		       ##
+##   	  	      Utvecklat av Eddy Hebib & Mattias From		       ##
+##				   Med hjälp av:			       ##
+##    Jonatan Csok, Jonathan Nordgren & Gustav Aldenbratt & Matteus Westman    ##
+##                                                                             ##
+## Denna programvara är licenicerad till dig under vilkoren av GNU GPL v2.     ##
+## Se docs/LICENSE.txt                                                         ##
+## Vi använder många öppna kodbibliotek, deras licenser finns i docs/oss.html  ##
+#################################################################################   
+-->
+<!DOCTYPE html>
+<html id="com.systemstats.admincenter.win32.hta"> 
+<head>
+    <meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Systemstats Admin</title>
+	<link rel="stylesheet" href="css/bootstrap-custom.min.css">
+	<link rel="stylesheet" href="css/admincenter.css">
+	<!-- HTA -->
+    <HTA:APPLICATION 
+	ID="APP1" ICON="img/systemstatsAdmin.ico"
+	APPLICATIONNAME="AdminCenter"
+	sysMenu="yes"
+	navigable="yes"
+	scroll="no"
+	border="yes"
+	showintaskbar="yes"
+	singleinstance="yes"
+	innerborder="no"
+	windowState="maximize"> 
+</head>
+
+<style>
+html, body, {
+    position:fixed;
+    top:20;
+    bottom:0;
+    left:0;
+    right:0;
+}
+</style> 
+
+<style>
+body {
+color:#FFF;
+background-color:#000080;
+text-align:center;
+font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+
+a:hover, a:visited, a:link, a:active
+{
+  text-decoration:none;
+  color:#FFF;
+}
+.btn {
+
+ font-size: 100%
+}
+
+</style>
+
+<script language="VBScript"> 
+    Sub ExitApp
+       self.close
+    End Sub
+	
+	Sub EnvVars
+       Set objShell = CreateObject("Wscript.Shell")
+       objShell.Run "C:\Windows\System32\rundll32.exe sysdm.cpl,EditEnvironmentVariables" 
+    End Sub
+	
+	Sub Systemsettings
+       Set objShell = CreateObject("Wscript.Shell")
+       objShell.Run "C:\Windows\System32\systempropertiesprotection.exe" 
+    End Sub
+		
+	Sub Window_OnLoad 
+	
+	' Funktioner för att fylla HTML element med information.
+
+	'	span_computername.innerHTML = GetComputerName()
+
+	'	span_myvar.innerHTML = GetMyVar() ' funktion för att hämta miljövariabel....
+
+	'	span_location.innerHTML = GetLocation()
+	
+        span_username.innerHTML = GetUserName()	
+
+	End Sub
+	
+	Sub SaveLogs
+	Set objShell = CreateObject("WScript.Shell")
+   ' objShell.Run("sysinfo.hta")
+	objShell.Run("msinfo32.exe")
+	End Sub
+    
+    Sub StartSMSCFGRC
+
+        Set objShell = CreateObject("Wscript.Shell")
+
+        objShell.Run "cmd.exe /c C:\Windows\CCM\SMSCFGRC.cpl" 
+		
+    End Sub
+
+    Sub StartSCClient
+
+        Set objShell = CreateObject("Wscript.Shell")
+
+        objShell.Run "cmd.exe /c start C:\Windows\CCM\SCClient.exe" 
+		' objShell.Run "sccm.cmd"
+    End Sub
+
+    Sub RebootComputer
+
+        Set objShell = CreateObject("Wscript.Shell")
+
+        objShell.Run "cmd.exe /c C:\Windows\System32\shutdown.exe -r -t 00"
+    End Sub
+
+    Sub UpdateGPO
+
+        Set objShell = CreateObject("Wscript.Shell")
+        
+        objShell.Run "cmd.exe /c gpupdate.exe /force"
+        
+        End Sub
+		
+	' to replace javascript	hostname function
+    Function GetComputerName()
+
+		Set objNetwork = CreateObject("WScript.Network")
+
+		GetComputerName = objNetwork.ComputerName
+
+	End Function
+	
+	' show username in top.
+	Function GetUserName()
+
+		Set objNetwork = CreateObject("WScript.Network")
+
+		GetUserName = objNetwork.UserName
+
+	End Function
+	
+	Sub LaunchSystemStats
+	    Set objShell = CreateObject("Wscript.Shell")
+	    objShell.Run "iexplore.exe %stsweb%"
+	End Sub
+	
+	' Alla nya funktioner från och med här... 
+	
+	Sub TBD 
+	
+	   msgbox("Fel, Funktion inte klar än")
+	
+	End Sub
+	
+	' följande kräver att användaren är med i Systemstats "IT" grupp
+	 Sub OpenLogsDir
+
+        Set objShell = CreateObject("Wscript.Shell")
+        
+        objShell.Run "cmd.exe /c explorer.exe %stslog%"
+        
+        End Sub
+		
+	Sub OpenScriptsDir
+
+        Set objShell = CreateObject("Wscript.Shell")
+        
+        objShell.Run "cmd.exe /c explorer.exe %stsscr%"
+        
+        End Sub
+		
+	Sub Lager
+	     Set objShell = CreateObject("Wscript.Shell")
+        objShell.Run "%stsmod%\SystemstatsAdmin\lager.bat"
+	
+	End Sub
+	
+	
+	Sub Leverans
+		Set objShell = CreateObject("Wscript.Shell")
+        objShell.Run "%stsmod%\SystemstatsAdmin\lev.bat"
+	
+	End Sub
+	
+	Sub SystemstatsUninstaller
+	   Set objShell = CreateObject("Wscript.Shell")
+       objShell.Run "%stsmod%\SystemstatsAdmin\remove_computer.bat"
+	End Sub
+	
+	Sub ErrorHistory
+	  Set objShell = CreateObject("Wscript.Shell")
+      objShell.Run "%stsmod%\SystemstatsAdmin\error_history.bat"
+	End Sub
+	
+	Sub Cdollar
+	  Set objShell = CreateObject("Wscript.Shell")
+      objShell.Run "%stsmod%\SystemstatsAdmin\C$.bat"
+	End Sub
+
+	Sub Update
+       Set objShell = CreateObject("Wscript.Shell")
+       objShell.Run "%stsmod%\SystemstatsAdmin\RunSystemstats.bat"
+	End Sub
+	
+	Sub BBS
+       Set objShell = CreateObject("Wscript.Shell")
+       objShell.Run "%stsmod%\SystemstatsAdmin\BBS.bat"
+	End Sub
+	
+	Sub Forrad
+       Set objShell = CreateObject("Wscript.Shell")
+       objShell.Run "%stsmod%\SystemstatsAdmin\monitor.bat"
+	End Sub
+	
+	Sub EditConfig
+	Set objShell = CreateObject("Wscript.Shell")
+        objShell.Run "%stsmod%\SystemstatsAdmin\edit_config.bat"
+	End Sub
+	
+	Sub verinfo
+	Set objShell = CreateObject("Wscript.Shell")
+        objShell.Run "iexplore.exe http://systemstats/docs/webhelp.php?htmlhelp=ver.htm"
+	End Sub 
+	
+	Sub PublicEdit
+	 Set objShell = CreateObject("Wscript.Shell")
+     objShell.Run "%stsmod%\SystemstatsAdmin\Public.bat"
+	End Sub 
+	
+	Sub CommentEdit
+	 Set objShell = CreateObject("Wscript.Shell")
+     objShell.Run "%stsmod%\SystemstatsAdmin\Comment.bat"
+	End Sub 
+	
+	Sub StartStsCLI
+	 Set objShell = CreateObject("Wscript.Shell")
+     objShell.Run "cmd.exe"
+	End Sub 
+	
+	
+</script>
+
+
+<script type="text/javascript"> 
+     // get computername 
+    function computername() 
+    { 
+        var wshShell = new ActiveXObject("WScript.Shell") 
+        var sComputerName = wshShell.ExpandEnvironmentStrings("%COMPUTERNAME%") 
+        return sComputerName 
+    } 
+	// get IP adress 
+	function ipAddress() {
+				var ipAddress = "";
+				var wmi = GetObject("winmgmts:{impersonationLevel=impersonate}");
+				e = new Enumerator(wmi.ExecQuery("SELECT * FROM Win32_NetworkAdapterConfiguration WHERE IPEnabled = True"));
+					for(; !e.atEnd(); e.moveNext()) {
+						var s = e.item(); 
+						ipAddress = s.IPAddress(0);
+					}
+				return ipAddress		
+			}
+	var ipaddr = ipAddress();
+</script>
+
+<script type="text/javascript"> 
+// Systemstats konfig variabler JS
+var kund = "Customer C001";
+var server = "SERVER_NAME";
+var version = "";
+var domain_NETBIOS = "";
+</script>
+
+<body>
+<div class="container" id="container" style="padding-top:10px;">
+<img id="logo" style="float:left;padding-left:1px;padding-top:1px;padding-right:1px;" src="img/systemstats.png" width="200">
+
+<div class="top_info_div">
+<br /><br />
+<h2> Systemstats Administratörsmodul</h2>
+
+<h2> <strong>Användare: <span id="span_username"></span> </strong> | <strong>Datornamn: <script type="text/javascript"> document.write(computername());</script>  </strong> </h2>
+<h3> Verksamhet: <script type="text/javascript"> document.write(kund);</script> | Server: <script type="text/javascript"> document.write(server);</script> | Klient-IP: <script type="text/javascript"> document.write(ipaddr);</script> </h3>
+</div>
+
+<h3> Verktyg för den här datorn </h3>
+
+<div class="this_pc">
+<div class="">
+<button class="btn btn-success" style="padding-bottom:5px;" onclick="StartSCClient">Software Center</button>
+<button class="btn btn-success" style="padding-bottom:5px;" onclick="StartSMSCFGRC">Configuration Manager</button>
+<button class="btn btn-success" style="padding-bottom:5px;" onclick="Systemsettings">Systemegenskaper</button>
+<button class="btn btn-success" style="padding-bottom:5px;" onclick="SaveLogs">Systeminfo</button>
+<button class="btn btn-success" style="padding-bottom:5px;" onclick="EnvVars">Miljövariabler</button>
+<br />   
+<br /> 
+<br />        
+<button class="btn btn-success" style="padding-bottom:5px;" onclick="Lager">Sätt dator i lager</button> 
+<button class="btn btn-warning" style="padding-bottom:5px;" onclick="Leverans">Slutför för leverans</button> 
+<button class="btn btn-info" style="padding-bottom:5px;" onclick="Update">Kör skript</button>
+<button class="btn btn-danger" style="padding-bottom:5px;" onclick="ErrorHistory">Felhistorik</button>
+</div> 
+</div>
+
+<h3> Systemstats underhåll </h3>
+<button class="btn btn-danger" style="padding-bottom:5px;" onclick="SystemstatsUninstaller">Ta bort dator(er)</button>
+<button class="btn btn-primary" style="padding-bottom:5px;" onclick="PublicEdit">Publika dator(er)</button>
+<button class="btn btn-warning" style="padding-bottom:5px;" onclick="CommentEdit">Kommentarer</button>
+<button class="btn btn-info" style="padding-bottom:5px;" onclick="BBS">BBS</button>
+<button class="btn btn-info" style="padding-bottom:5px;" onclick="Forrad">Extern arbetsplats</button>
+<button class="btn btn-success" style="padding-bottom:5px;" onclick="OpenLogsDir">Loggkat</button>
+<button class="btn btn-warning" style="padding-bottom:5px;" onclick="OpenScriptsDir">Skriptkat</button>
+<h3> Genvägar </h3>
+
+<div class="ComputerSetup.UI.buttons4">
+
+	<button class="btn btn-success" style="padding-bottom:5px;" onclick="LaunchSystemStats">Systemstats</button>
+	<button class="btn btn-info" style="padding-bottom:5px;" onclick="Cdollar">C$</button>
+	<br /><br />
+	<button class="btn btn-danger" style="padding-bottom:5px;" onclick="ExitApp">Stäng</button>
+</div>
+
+<p> <a href="#" onclick="verinfo"> Version 4.11 "Doubtless" </a>  | Utvecklad av Eddy Hebib och Mattias From | © 2016-2021 </p>
+<a href="#" title="Textbaserad Klient" onclick="StartStsCLI"><img id="img4" height="40" width="40" src="img/cmd.png"></a>
+</div>
+
+<script type="text/javascript">
+
+ if(screen.width > 2500) {
+ document.getElementById("container").style.fontSize = "170%";
+  document.getElementById("img1").style.width = "1.5%";
+    document.getElementById("img1").style.height = "3%";
+	document.getElementById("img2").style.width = "1.5%";
+    document.getElementById("img2").style.height = "3%";
+	document.getElementById("img3").style.width = "1.5%";
+    document.getElementById("img3").style.height = "3%";
+	document.getElementById("img4").style.width = "1.5%";
+    document.getElementById("img4").style.height = "3%";
+	document.getElementById("logo").style.width = "15%";
+    document.getElementById("logo").style.height = "7.5%";
+
+} 
+
+if(screen.width > 3000) {
+ document.getElementById("container").style.fontSize = "250%";
+  document.getElementById("img1").style.width = "1.5%";
+    document.getElementById("img1").style.height = "3%";
+	document.getElementById("img2").style.width = "1.5%";
+    document.getElementById("img2").style.height = "3%";
+	document.getElementById("img3").style.width = "1.5%";
+    document.getElementById("img3").style.height = "3%";
+	document.getElementById("img4").style.width = "1.5%";
+    document.getElementById("img4").style.height = "3%";
+	document.getElementById("logo").style.width = "15%";
+    document.getElementById("logo").style.height = "7.5%";
+
+} 
+
+
+</script>
+</body> 
+</html>

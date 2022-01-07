@@ -1,0 +1,6 @@
+.LOG
+Detta är en loggfil över problem som den här datorn har/har haft samt vidtagna åtgärder. 
+Tillexempel om nätverkortet är bytt så antecknas det här. Datum och tid läggs till varje gång 
+sparas från admin-klienten.
+------------------------------------------------------------------------------------------------
+

@@ -1,0 +1,1 @@
+Förklara hur logib_BG funkar för customization. 

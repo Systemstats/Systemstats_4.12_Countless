@@ -1,0 +1,3 @@
+Kommentarer får inte sluta med en siffra, då blir CSV-filen som skickas ut korrupt. /MF170511
+
+Undvik för långa kommentarer så att inte tabellen trycks ut! /MF170523

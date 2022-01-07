@@ -1,0 +1,19 @@
+body {
+color:#FFF;
+background-color:#0076bc;
+text-align:center;
+font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+
+a:hover, a:visited, a:link, a:active
+{
+  text-decoration:none;
+  color:#005c80;
+}
+
+button {
+  font-weight:;
+  font-size:;
+  text-transform:none;
+  
+}

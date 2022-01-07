@@ -1,0 +1,8 @@
+
+2021-07-30 - 09:28:42 - 10.12.19.201 har loggat in med användarnamn: tekniker
+2021-07-30 - 09:30:22 - 10.12.19.201 har loggat ut med användarnamn: tekniker
+2021-07-30 - 09:30:30 - 10.12.19.201 har loggat in med användarnamn: system
+2021-07-30 - 09:31:02 - 10.12.19.201 försökte logga in med användarnamn: tekniker och lösenord: tekniker
+2021-07-30 - 09:32:09 - 10.12.19.201 har loggat in med användarnamn: system
+2021-07-30 - 15:55:50 - 172.31.12.123 försökte logga in med användarnamn: tekniker och lösenord: tekniker
+2021-07-30 - 15:55:56 - 172.31.12.123 har loggat in med användarnamn: system
